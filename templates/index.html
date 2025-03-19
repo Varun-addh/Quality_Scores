@@ -1,0 +1,204 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Datasets</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/Dpr.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/Gde.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/Gqcls.css') }}">
+</head>
+<body>
+    <h1>Upload Datasets</h1>
+    <form action="/generate_report" method="POST" enctype="multipart/form-data">
+        <label for="file1">Select the first dataset:</label>
+        <input type="file" name="file1" required><br><br>
+        
+        <label for="file2">Select the second dataset:</label>
+        <input type="file" name="file2" required><br><br>
+        
+        <input type="submit" value="Generate Report">
+    </form>
+</body>
+</html> -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Datasets</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Barlow:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        /* Global Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #1C1C28, #4A90E2 50%, #9013FE);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            color: #fff;
+            background-attachment: fixed;
+        }
+
+        .container {
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(18px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 600px;
+            width: 90%;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.7);
+            text-align: center;
+            transform: translateY(-10px);
+            animation: float 2.5s infinite ease-in-out;
+        }
+
+        /* @keyframes float {
+            0%, 100% {
+                transform: translateY(-10px);
+            }
+            50% {
+                transform: translateY(0);
+            }
+        } */
+
+        h1 {
+            font-family: 'Barlow', sans-serif;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: #E8E8E8;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        label {
+            font-size: 1rem;
+            color: #E2E2E2;
+            margin-bottom: 10px;
+            display: block;
+            text-align: left;
+        }
+
+        input[type="file"] {
+            display: block;
+            padding: 14px;
+            width: 100%;
+            font-size: 1rem;
+            color: #ddd;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 12px;
+            margin-bottom: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        input[type="file"]:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: #4A90E2;
+        }
+
+        input[type="submit"] {
+            background: linear-gradient(135deg, #4A90E2, #9013FE);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 15px;
+            font-size: 1.1rem;
+            width: 100%;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(144, 19, 254, 0.4);
+            transition: all 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        input[type="submit"]:hover {
+            background: linear-gradient(135deg, #9013FE, #4A90E2);
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(144, 19, 254, 0.5);
+        }
+
+        .description {
+            margin-top: 20px;
+            font-size: 1rem;
+            color: #CCCCCC;
+        }
+
+        .footer {
+            margin-top: 25px;
+            font-size: 0.9rem;
+            color: #AAAAAA;
+        }
+
+        .footer a {
+            color: #4A90E2;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        .footer a:hover {
+            color: #9013FE;
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 25px;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            input[type="file"], input[type="submit"] {
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            .description {
+                font-size: 0.9rem;
+            }
+
+            .footer {
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Upload Your Datasets</h1>
+        <form action="/generate_report" method="POST" enctype="multipart/form-data">
+            <label for="file1">Select the first dataset:</label>
+            <input type="file" id="file1" name="file1" required>
+            
+            <label for="file2">Select the second dataset:</label>
+            <input type="file" id="file2" name="file2" required>
+            
+            <input type="submit" value="Generate Report">
+        </form>
+        <p class="description">
+            Upload two datasets to generate data quality report.
+        </p>
+        <div class="footer">
+            <p>Need help? <a href="/contact">Contact Support</a></p>
+        </div>        
+    </div>
+</body>
+</html>

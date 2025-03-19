@@ -1,0 +1,395 @@
+<style>
+#ai-assistant {
+  position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 10000;
+    --primary-gradient: linear-gradient(135deg, hsl(238, 89%, 65%) 0%, hsl(262, 90%, 66%) 100%);
+    --error-color: hsl(0, 84%, 60%);
+    --success-color: hsl(142, 76%, 46%);
+    --surface-1: hsl(0, 0%, 100%);
+    --surface-2: hsl(210, 40%, 98%);
+    --text-primary: hsl(222, 47%, 16%);
+    --text-secondary: hsl(215, 16%, 47%);
+    --shadow-lg: 0 12px 48px -12px rgba(0, 0, 0, 0.15);
+    --ease-squish: cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+.ai-icon {
+    background: var(--primary-gradient);
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 8px 24px rgba(99, 102, 241, 0.3);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.ai-icon::after {
+    content: '🤖';
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    color: white;
+    opacity: 1;
+}
+
+.ai-chat-container {
+    position: fixed;
+    bottom: 100px;
+    right: 30px;
+    width: 400px;
+    max-width: 90vw;
+    height: 600px;
+    max-height: 80vh;
+    backdrop-filter: blur(12px);
+    background: linear-gradient(145deg, 
+        rgba(255,255,255,0.96) 0%,
+        rgba(255,255,255,0.88) 100%);
+    border-radius: 20px;
+    box-shadow: var(--shadow-lg),
+    0 -8px 32px rgba(99, 102, 241, 0.1);
+    transform: translateY(20px) scale(0.98);
+    transition: all 0.4s var(--ease-squish);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.chat-open .ai-chat-container {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.ai-chat-header {
+    padding: 18px 24px;
+    background: var(--primary-gradient);
+    color: white;
+    border-radius: 20px 20px 0 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-weight: 600;
+}
+
+.ai-messages {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+    scroll-behavior: smooth;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    background: var(--surface-2);
+}
+
+.message {
+    max-width: 85%;
+    padding: 16px 20px;
+    border-radius: 16px;
+    line-height: 1.6;
+    font-size: 15px;
+    animation: messageAppear 0.3s ease-out;
+    backdrop-filter: blur(4px);
+    transition: transform 0.3s, opacity 0.3s;
+    border: 1px solid rgba(255,255,255,0.2);
+    word-wrap: break-word;
+}
+
+.message.user {
+  background: linear-gradient(95deg, 
+        rgba(199, 210, 254, 0.4) 0%,
+        rgba(221, 214, 254, 0.6) 100%);
+    border-radius: 24px 8px 24px 24px;
+    color: white;
+    align-self: flex-end;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(209, 213, 219, 0.3);
+}
+
+.message.ai {
+  background: linear-gradient(85deg, 
+        rgba(255,255,255,0.9) 0%,
+        rgba(245, 243, 255, 0.9) 100%);
+    border-radius: 8px 24px 24px 24px;
+    position: relative;
+    color: #101219d4;
+    align-self: flex-start;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+}
+
+.message table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 12px 0;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.message th, .message td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.message th {
+    background: #f8fafc;
+    font-weight: 600;
+    color: #1e293b;
+}
+
+.message tr:last-child td {
+    border-bottom: none;
+}
+
+.ai-input-container {
+    padding: 16px;
+    background: transparent;
+    border-top: 1px solid #f1f5f9;
+    display: flex;
+    gap: 12px;
+}
+
+.ai-input {
+    flex: 1;
+    padding: 12px 16px;
+    border: 1px solid #e2e8f0;
+    font-size: 15px;
+    padding: 18px 24px;
+    border-radius: 16px;
+    background: rgba(255,255,255,0.9);
+    transition: all 0.3s;
+    padding-left: 10px;
+}
+
+.ai-input:focus {
+    outline: none;
+    border-color: #818cf8;
+    box-shadow: 0 4px 24px rgba(99, 102, 241, 0.15);
+}
+
+.ai-send {
+    background: var(--primary-gradient);
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-weight: 500;
+}
+
+.ai-send:hover {
+    opacity: 0.95;
+    transform: translateY(-1px);
+}
+
+@keyframes messageAppear {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.typing-indicator {
+    display: flex;
+    gap: 4px;
+    background: rgba(255,255,255,0.9);
+    padding: 16px 24px;
+    border-radius: 24px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+    width: fit-content;
+}
+
+.typing-dot {
+    width: 10px;
+    height: 10px;
+    background: var(--primary-gradient);
+    border-radius: 50%;
+    animation: pulse 1.4s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(0.9); opacity: 0.6; }
+    50% { transform: scale(1.2); opacity: 1; }
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+}
+
+@keyframes hologram {
+    0% { background-position: 0% 0%; }
+    100% { background-position: 200% 200%; }
+}
+
+@keyframes bounce {
+    0%, 80%, 100% { transform: translateY(0); }
+    40% { transform: translateY(-6px); }
+}
+
+.message {
+    animation: fadeInUp 0.3s ease-in-out;
+}
+
+h3{
+  color: white;
+}
+
+@media (prefers-color-scheme: dark) {
+    #ai-assistant {
+        --surface-1: hsl(222, 47%, 12%);
+        --surface-2: hsl(216, 33%, 17%);
+        --text-primary: hsl(210, 40%, 98%);
+        --text-secondary: hsl(215, 20%, 65%);
+    }
+    
+    .ai-chat-container {
+        background: linear-gradient(145deg, 
+            rgba(30, 41, 59, 0.96) 0%,
+            rgba(15, 23, 42, 0.98) 100%);
+        border-color: rgba(255,255,255,0.1);
+    }
+    
+    .message.user {
+        background: linear-gradient(95deg, 
+            rgba(49, 46, 129, 0.3) 0%,
+            rgba(76, 29, 149, 0.4) 100%);
+    }
+}
+
+
+</style>
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script type="module">
+import { GoogleGenerativeAI } from "https://cdn.skypack.dev/@google/generative-ai";
+
+let isDragging = false;
+let currentX;
+let currentY;
+let initialX;
+let initialY;
+let xOffset = 0;
+let yOffset = 0;
+
+const assistant = document.createElement("div");
+assistant.id = "ai-assistant";
+assistant.innerHTML = `
+  <div class="ai-icon">&#129302;</div>
+  <div class="ai-chat-container">
+    <div class="ai-chat-header">
+      <h3>Assistant</h3>
+      <button class="close-chat">&times;</button>
+    </div>
+    <div class="ai-messages"></div>
+    <div class="ai-input-container">
+      <input type="text" placeholder="Ask about data quality..." class="ai-input">
+      <button class="ai-send">Send</button>
+    </div>
+  </div>
+`;
+
+document.body.appendChild(assistant);
+
+assistant.addEventListener("mousedown", dragStart);
+document.addEventListener("mousemove", drag);
+document.addEventListener("mouseup", dragEnd);
+
+document.querySelector(".ai-icon").addEventListener("click", toggleChat);
+document.querySelector(".close-chat").addEventListener("click", toggleChat);
+document.querySelector(".ai-send").addEventListener("click", handleQuery);
+document.querySelector(".ai-input").addEventListener("keypress", (e) => {
+  if (e.key === "Enter") handleQuery();
+});
+
+function dragStart(e) {
+  initialX = e.clientX - xOffset;
+  initialY = e.clientY - yOffset;
+  if (e.target === assistant) isDragging = true;
+}
+
+function drag(e) {
+  if (isDragging) {
+    e.preventDefault();
+    currentX = e.clientX - initialX;
+    currentY = e.clientY - initialY;
+    xOffset = currentX;
+    yOffset = currentY;
+    setTranslate(currentX, currentY, assistant);
+  }
+}
+
+function setTranslate(xPos, yPos, el) {
+  el.style.transform = `translate3d(${xPos}px, ${yPos}px, 0)`;
+}
+
+function dragEnd() {
+  initialX = currentX;
+  initialY = currentY;
+  isDragging = false;
+}
+
+function toggleChat() {
+  assistant.classList.toggle("chat-open");
+}
+
+async function handleQuery() {
+  const input = document.querySelector(".ai-input");
+  const message = input.value.trim();
+  if (!message) return;
+
+  addMessage(message, "user");
+  input.value = "";
+  const response = await mockAIResponse(message);
+  addMessage(response, "ai");
+}
+
+function addMessage(content, sender) {
+  const messages = document.querySelector(".ai-messages");
+  const messageDiv = document.createElement("div");
+
+  messageDiv.className = `message ${sender}`;
+
+  const markdownHTML = marked.parse(content);
+  messageDiv.innerHTML = markdownHTML;
+
+  messages.appendChild(messageDiv);
+  messages.scrollTop = messages.scrollHeight;
+}
+
+async function mockAIResponse(query) {
+    const apiKey = "AIzaSyCWVAmd9SVaW078o6DiOW8VkNpZQIWMN_4";
+    const genAI = new GoogleGenerativeAI(apiKey);
+    const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash-exp" });
+    const generationConfig = {
+        temperature: 0.7,
+        topP: 0.95,
+        topK: 64,
+        maxOutputTokens: 65536,
+        responseMimeType: "text/plain",
+    };
+    const chatSession = model.startChat({ generationConfig, history: [] });
+    const result = await chatSession.sendMessage(query);
+    return result.response.text();
+}
+
+    </script>
