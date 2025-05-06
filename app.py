@@ -3,7 +3,7 @@ import os
 import uuid
 from flask import Flask, render_template, request, redirect, url_for, flash, session
 from flask_mail import Mail, Message
-from dotenv import load_dotenv  # For environment variables
+from dotenv import load_dotenv 
 
 # Import data validation modules
 from Data_Validation.dataloD.data_loader import load_dataset
@@ -47,7 +47,7 @@ def index():
 @app.route('/generate_report', methods=['POST'])
 def generate_report():
     """Generate a data quality report and redirect to avoid form resubmission."""
-    start_time = time.time()  # Start execution timer
+    start_time = time.time()
     
     try:
         # Validate file uploads
@@ -121,7 +121,7 @@ def generate_report():
 def view_report():
     """Render the report viewer page."""
     report_url = url_for('static', filename='combined_data_quality_report.html')
-    execution_time = session.get('execution_time', "0 min 0 sec")  # Retrieve from session
+    execution_time = session.get('execution_time', "0 min 0 sec")
     return render_template('report_viewer.html', report_url=report_url, execution_time=execution_time)
 
 @app.route('/contact', methods=['GET', 'POST'])
