@@ -61,7 +61,7 @@ def generate_combined_report(df, detailed_report_content, quality_summary_conten
             # Compute correlation matrix
             corr_matrix = numeric_columns.corr()
 
-            fig, ax = plt.subplots(figsize=(6, 4))  # Reduced figure size for neatness
+            fig, ax = plt.subplots(figsize=(6, 4))
             sns.heatmap(
                 corr_matrix,
                 annot=True,
@@ -150,57 +150,57 @@ def generate_combined_report(df, detailed_report_content, quality_summary_conten
 
         # Final HTML structure
         final_html = f"""
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Data Quality Report</title>
-    <link rel="stylesheet" href="Data_Validation\\dataProfrep\\Dpr.css">
-    <script src="Data_Validation\\dataProfrep\\DPR.js" defer></script>
-</head>
-<body>
-    <div class="navbar">
-        <div class="logo-container">
-            <div class="logo-bg">
-                <img src="images/image44.png" alt="Logo">
-            </div>
-            <p class="logo-title">Data Quality Report</p>
-        </div>
-        <div class="nav-links">
-            <a href="javascript:void(0);" onclick="showSection('detailed-report')">Detailed Report</a>
-            <a href="javascript:void(0);" onclick="showSection('quality-summary')">Quality Summary</a>
-            <a href="javascript:void(0);" onclick="showSection('column-statistics')">Column Statistics</a>
-        </div>
-    </div>
+            <!DOCTYPE html>
+            <html lang="en">
+            <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <title>Data Quality Report</title>
+                <link rel="stylesheet" href="Data_Validation\\dataProfrep\\Dpr.css">
+                <script src="Data_Validation\\dataProfrep\\DPR.js" defer></script>
+            </head>
+            <body>
+                <div class="navbar">
+                    <div class="logo-container">
+                        <div class="logo-bg">
+                            <img src="images/image44.png" alt="Logo">
+                        </div>
+                        <p class="logo-title">Data Quality Report</p>
+                    </div>
+                    <div class="nav-links">
+                        <a href="javascript:void(0);" onclick="showSection('detailed-report')">Detailed Report</a>
+                        <a href="javascript:void(0);" onclick="showSection('quality-summary')">Quality Summary</a>
+                        <a href="javascript:void(0);" onclick="showSection('column-statistics')">Column Statistics</a>
+                    </div>
+                </div>
 
-    <!-- Navigation Bar and Sidebar Menu -->
-    <div class="navig-bar">
-        <button class="hamburger-menu">☰</button>
-    </div>
-    <div class="sidebar-menu">
-        <ul>
-            <li><a href="#dataset-statistics">Dataset Statistics</a></li>
-            <li><a href="#overall-quality-score">Overall Quality Score</a></li>
-            <li><a href="#missing-values">Missing Values Analysis</a></li>
-            <li><a href="#visualizations">Visualizations</a></li>
-        </ul>
-    </div>
+                <!-- Navigation Bar and Sidebar Menu -->
+                <div class="navig-bar">
+                    <button class="hamburger-menu">☰</button>
+                </div>
+                <div class="sidebar-menu">
+                    <ul>
+                        <li><a href="#dataset-statistics">Dataset Statistics</a></li>
+                        <li><a href="#overall-quality-score">Overall Quality Score</a></li>
+                        <li><a href="#missing-values">Missing Values Analysis</a></li>
+                        <li><a href="#visualizations">Visualizations</a></li>
+                    </ul>
+                </div>
 
-    <!-- Main Content -->
-    <div class="content">
-        <div id="detailed-report" class="section-content active">
-            {detailed_report_content}
-        </div>
-        <div id="quality-summary" class="section-content">
-            {quality_summary_content}
-        </div>
-        <div id="column-statistics" class="section-content">
-            {column_statistics_html}
-        </div>
-    </div>
-</body>
-</html>
+                <!-- Main Content -->
+                <div class="content">
+                    <div id="detailed-report" class="section-content active">
+                        {detailed_report_content}
+                    </div>
+                    <div id="quality-summary" class="section-content">
+                        {quality_summary_content}
+                    </div>
+                    <div id="column-statistics" class="section-content">
+                        {column_statistics_html}
+                    </div>
+                </div>
+            </body>
+            </html>
 
 """
         # Save the report

@@ -1,5 +1,4 @@
- 
-* {
+ * {
     margin: 0px;
     padding: 0px;
     box-sizing: border-box;
@@ -166,7 +165,7 @@ tr:hover {
 }
  
 /* Overall Score Styling */
-.overall-score-container {
+/* .overall-score-container {
     text-align: center;
     margin: 40px auto;
     padding: 20px 30px;
@@ -197,9 +196,8 @@ tr:hover {
     width: 120px;
     height: 120px;
     margin: 0 auto;
-}
+} */
 
-/* Missing Values Analysis */
 .missing-values-container {
     margin: 50px auto;
     padding: 30px;
@@ -230,7 +228,6 @@ tr:hover {
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
 }
  
-/* Dropdown Styling */
 select {
     display: block;
     margin: 20px auto;
@@ -252,8 +249,6 @@ select:focus {
     box-shadow: 0 0 5px rgba(106, 17, 203, 0.5);
 }
  
-/* Chart Container */
-/* Chart Container */
 .chart-container {
     display: none;
     text-align: center;
@@ -261,7 +256,6 @@ select:focus {
     animation: fadeIn 0.6s ease-in-out;
 }
 
-/* Image Styling */
 .chart-container img {
     max-width: 85%;
     width: 85%;
@@ -319,7 +313,6 @@ select:focus {
     line-height: 1.5;
 }
 
-/* Smooth Fade-in Animation */
 @keyframes fadeIn {
     from {
         opacity: 0;

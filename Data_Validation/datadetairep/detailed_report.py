@@ -107,7 +107,7 @@ def generate_detailed_report(df, detailed_scores_df, overall_score):
                  <table>""")
 
         for key, value in dataset_statistics.items():
-            if isinstance(value, dict):  # Handle dictionary values (Unique Values and Data Types)
+            if isinstance(value, dict):
                 html_content.append(f"<tr><td colspan='2' class='table-key'>{key}</td></tr>")
                 for sub_key, sub_value in value.items():
                     html_content.append(f"<tr><td class='sub-key'>{sub_key}</td><td class='sub-value'>{sub_value}</td></tr>")
@@ -343,7 +343,6 @@ def generate_detailed_report(df, detailed_scores_df, overall_score):
             </div>""")
         html_content.append("</div>")
           # End Chart Container
-          # 
         import os
 
         with open(os.path.join("Data_Validation", "datadetairep", "hi.html"), "r", encoding="utf-8") as ass:

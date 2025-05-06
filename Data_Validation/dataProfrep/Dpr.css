@@ -7,12 +7,13 @@ body {
     color: #333;
     line-height: 1.6;
     scroll-behavior: smooth;
-    padding-top: 100px; /* Offset for fixed navbar height */
+    padding-top: 100px;
 }
 
 html {
     scroll-behavior: smooth;
 }
+
 
 
 /* Navbar Styles */
@@ -445,7 +446,7 @@ select {
 
 .nav-actions button:focus {
     outline: none;
-    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.5); /* Focus ring for accessibility */
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.5);
 }
 
 

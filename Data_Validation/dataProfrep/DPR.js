@@ -113,10 +113,8 @@ class QuantumNavigation {
     }
 }
 
-// Initialize Quantum Navigation
 new QuantumNavigation();
 
-// Updated showSection function
 function showSection(sectionId) {
     const sections = document.querySelectorAll('.section-content');
     sections.forEach(section => section.classList.remove('active'));
@@ -126,7 +124,6 @@ function showSection(sectionId) {
         targetSection.classList.add('active');
     }
 
-    // Always show hamburger when detailed report is clicked
     const hamburger = document.querySelector('.hamburger-menu');
-    hamburger.style.display = 'block'; // Force show hamburger for detailed report
+    hamburger.style.display = 'block';
 }

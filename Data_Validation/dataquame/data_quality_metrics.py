@@ -159,5 +159,5 @@ def calculate_scores(df, df2, selected_metrics=None, threshold_date=None):
 def overall_quality_score(scores_df, selected_metrics=None):
     """Calculate the overall quality score based on selected metrics."""
     if selected_metrics is None:
-        selected_metrics = scores_df.columns  # Use all metrics if none are specified
+        selected_metrics = scores_df.columns
     return scores_df[selected_metrics].mean().mean()

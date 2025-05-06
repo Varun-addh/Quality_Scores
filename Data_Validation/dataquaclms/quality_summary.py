@@ -1,6 +1,5 @@
 def generate_quality_summary(df, scores_df):
     try:
-        # Initialize the HTML content with a link to the external CSS
         html_content = []
         html_content.append("""
         <link rel="stylesheet" href="Data_Validation\\dataquaclms\\Gqcls.css">
@@ -26,9 +25,8 @@ def generate_quality_summary(df, scores_df):
             else:
                 html_content.append("<p class='no-columns'>No columns are passing 80% or above.</p>")
 
-            html_content.append("</div>")  # Closing metric-card
+            html_content.append("</div>") 
 
-        # Close containers
         html_content.append("""
             </div> <!-- Closing metrics-container -->
             
